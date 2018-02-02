@@ -30,8 +30,6 @@ var RRuleHelper = (function () {
             o.byweekday = newWeekdays_1;
         }
     };
-    RRuleHelper.parseRule = function (ruleString) {
-    };
     // Converts from RRule.Weekday | Number objects to our string day of the week
     RRuleHelper.parseWeekday = function (byweekday) {
         if (byweekday instanceof Number) {
@@ -49,9 +47,12 @@ var RRuleHelper = (function () {
         }
         return byweekday;
     };
-    RRuleHelper.toJSON = function (rule) {
+    RRuleHelper.toStringJSON = function (rule) {
         rule.options.byweekday = this.parseWeekday(rule.options.byweekday);
         return JSON.stringify(rule);
+    };
+    RRuleHelper.toJSON = function (rule) {
+        return JSON.parse(this.toStringJSON(rule));
     };
     RRuleHelper.days = {
         "MO": RRule.MO,
@@ -67,5 +68,6 @@ var RRuleHelper = (function () {
     ];
     return RRuleHelper;
 }());
-console.log(RRuleHelper.toJSON(rule));
+var jsonObject = RRuleHelper.toJSON(rule);
+console.log((JSON.parse(jsonObject)).options);
 //# sourceMappingURL=app.js.map

@@ -43,10 +43,6 @@ class RRuleHelper{
 		}
 	}
 
-	public static parseRule(ruleString: string) {
-
-	}
-
 	// Converts from RRule.Weekday | Number objects to our string day of the week
 	private static parseWeekday(byweekday : number | RRule.Weekday | RRule.Weekday[] | number[] | string | string[]) {
 		if (byweekday instanceof Number) {
@@ -63,12 +59,17 @@ class RRuleHelper{
 		return byweekday;
 	}
 
-
-
-	public static toJSON(rule: RRule) {
+	public static toStringJSON(rule: RRule) {
 		rule.options.byweekday = this.parseWeekday(rule.options.byweekday);
 		return JSON.stringify(rule);
 	}
+
+	public static toJSON(rule: RRule) {
+		return JSON.parse(this.toStringJSON(rule));
+	}
 }
 
-console.log(RRuleHelper.toJSON(rule));
+var jsonObject = RRuleHelper.toJSON(rule);
+
+
+console.log((JSON.parse(jsonObject)).options);
